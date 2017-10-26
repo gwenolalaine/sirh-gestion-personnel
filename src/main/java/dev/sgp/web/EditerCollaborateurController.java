@@ -16,22 +16,17 @@ public class EditerCollaborateurController extends HttpServlet{
 		String nom = req.getParameter("nom");
 		String prenom = req.getParameter("prenom");
 		
-		if(matricule == null){
-			resp.sendError(400, "Les paramètres suivants sont incorrects : matricule");
+		
+		String error = ErrorBuilder.buildError("matricule :" + matricule, "titre:" + titre, "nom:"+ nom, "prenom:"+prenom);
+		if(!error.equals("")){
+			resp.sendError(400, "Les paramatres suivants sont incorrects : " + error);
+			return;
 		}
-		else if(titre == null){
-			resp.sendError(400, "Les paramètres suivants sont incorrects : titre");
-		}
-		else if(nom == null){
-			resp.sendError(400, "Les paramètres suivants sont incorrects : nom");
-		}
-		else if(prenom == null){
-			resp.sendError(400, "Les paramètres suivants sont incorrects : prenom");
-		}
-		else{
-			resp.setStatus(201);
-			resp.getWriter().write("Création d'un collaborateur avec les informations suivantes : matricule=" + matricule + ",titre=" + titre + ",nom=" + nom + ",prenom="+prenom);
-		}
+			
+		resp.getWriter().write("<h1>Edition de collaborateur</h1>");
+		resp.setStatus(201);
+		resp.getWriter().write("Création d'un collaborateur avec les informations suivantes : matricule=" + matricule + ",titre=" + titre + ",nom=" + nom + ",prenom="+prenom);
+
 		
 	}
 }
