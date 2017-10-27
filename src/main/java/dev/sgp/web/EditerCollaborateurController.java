@@ -26,7 +26,6 @@ public class EditerCollaborateurController extends HttpServlet{
 		resp.getWriter().write("<h1>Edition de collaborateur</h1>");
 		resp.setStatus(201);
 		resp.getWriter().write("Création d'un collaborateur avec les informations suivantes : matricule=" + matricule + ",titre=" + titre + ",nom=" + nom + ",prenom="+prenom);
-
-		
+		resp.sendRedirect("/sgp/collaborateurs/lister");
 	}
 }
