@@ -10,6 +10,7 @@ public class Departement {
 		this.id = compteur++;
 		this.nom = nom;
 	}
+	
 	/**
 	 * @return the id
 	 */

@@ -1,5 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page import="dev.sgp.entite.Collaborateur"%>
+<%@page import="dev.sgp.util.Constantes.Constantes"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -21,7 +22,7 @@
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
             <li><a href="#!">X</a></li>
-            <li><a href="#!collaborateurs" id="collaborateurs">Collaborateurs</a></li>
+            <li><a href="<%=request.getContextPath() %>/collaborateurs/lister" id="collaborateurs">Collaborateurs</a></li>
             <li><a href="#!statistiques" id="statistiques">Statistiques</a></li>
             <li><a href="#!activites" id="activites">Activites</a></li>
         </ul>
@@ -47,7 +48,7 @@
 	<div id="tab-collaborateurs" class="row justify-content-between">
 	<%
 		int i = 0;
-		List<Collaborateur> collaborateurs =(List<Collaborateur>)request.getAttribute("collaborateurs");
+		List<Collaborateur> collaborateurs = Constantes.COLLAB_SERVICE.listerCollaborateurs();
 		for (Collaborateur collab : collaborateurs) {
 
 		%>
@@ -58,20 +59,20 @@
 			</div>
 			<div class="panel-body" id="collab">
 				<div class="col-sm-4">
-					Img ici
+					<img src="<%= collab.getPhoto() %>" class="img-responsive" />
 				</div>
 				<div class="col-sm-8">
-					<h3>Fonction</h3>
-					<h3>Departement</h3>
+					<h3>Fonction</h3> <%= collab.getIntitulePoste() %>
+					<h3>Departement</h3> <%if(collab.getDepartement() != null){%><%= collab.getDepartement().getNom() %><%} %>
 					<h3>Email : </h3> <%= collab.getEmailPro() %>
 					<h3>Téléphone</h3>
-					<a  id="modifCollaborateur" class="btn btn-default col-sm-offset-8 col-sm-4">Editer</a>
+					<a  href="/sgp/collaborateurs/editer?matricule=<%= collab.getMatricule() %>"id="modif" class="btn btn-default col-sm-offset-8 col-sm-4">Editer</a>
 				</div>
 			</div>
 		</div>
 		<%
-}
-%>
+		}
+		%>
 	</div>
 </div>
 

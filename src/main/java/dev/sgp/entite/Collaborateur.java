@@ -14,13 +14,16 @@ public class Collaborateur {
 	String photo;
 	ZonedDateTime dateHeureCreation;
 	Boolean actif;
-	int compteur;
+	static int compteur = 0;
 	String intitulePoste;
 	Departement departement;
+	String banque;
+	String bic;
+	String iban;
 	
 	public Collaborateur(String nom, String prenom, LocalDate dateDeNaissance, String adresse,
 			String numeroSecuriteSociale, String emailPro, ZonedDateTime dateHeureCreation,
-			Boolean actif) {
+			Boolean actif, String photo) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -33,7 +36,7 @@ public class Collaborateur {
 		this.actif = actif;
 		compteur++;
 		this.matricule = "A" + compteur;
-		this.photo = "<img src=\"" + this.matricule + "\"/>";
+		this.photo = photo;
 	}
 	/**
 	 * @return the matricule
@@ -155,6 +158,79 @@ public class Collaborateur {
 	public void setActif(Boolean actif) {
 		this.actif = actif;
 	}
+	/**
+	 * @return the compteur
+	 */
+	public int getCompteur() {
+		return compteur;
+	}
+	/**
+	 * @param compteur the compteur to set
+	 */
+	public void setCompteur(int compteur) {
+		this.compteur = compteur;
+	}
+	/**
+	 * @return the intitulePoste
+	 */
+	public String getIntitulePoste() {
+		return intitulePoste;
+	}
+	/**
+	 * @param intitulePoste the intitulePoste to set
+	 */
+	public void setIntitulePoste(String intitulePoste) {
+		this.intitulePoste = intitulePoste;
+	}
+	/**
+	 * @return the departement
+	 */
+	public Departement getDepartement() {
+		return departement;
+	}
+	/**
+	 * @param departement the departement to set
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
+	}
+	/**
+	 * @return the banque
+	 */
+	public String getBanque() {
+		return banque;
+	}
+	/**
+	 * @param banque the banque to set
+	 */
+	public void setBanque(String banque) {
+		this.banque = banque;
+	}
+	/**
+	 * @return the bic
+	 */
+	public String getBic() {
+		return bic;
+	}
+	/**
+	 * @param bic the bic to set
+	 */
+	public void setBic(String bic) {
+		this.bic = bic;
+	}
+	/**
+	 * @return the iban
+	 */
+	public String getIban() {
+		return iban;
+	}
+	/**
+	 * @param iban the iban to set
+	 */
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+	
 	
 	
 	

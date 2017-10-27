@@ -41,7 +41,7 @@ public class AjouterCollaborateurController extends HttpServlet{
 			/*validation des champs*/
 			String error = ErrorBuilder.buildError("nom:" + nom, "prenom:" + prenom, "date:"+ dateDeNaissance, "adresse:"+adresse, "numero:"+numero);
 			if(!error.equals("")){
-				resp.sendError(400, "Les paramatres suivants sont incorrects : " + error);
+				resp.sendError(400, "Les paramètres suivants sont incorrects : " + error);
 				return;
 			}
 			
@@ -53,10 +53,10 @@ public class AjouterCollaborateurController extends HttpServlet{
 			/* Creation du reste des paramètres */
 			ZonedDateTime dateCreation = ZonedDateTime.now();
 			String emailPro = prenom + "." + nom + "@societe.com";
-			
+			String photo = "https://image.freepik.com/icones-gratuites/symbole-d-39-utilisateur-inconnu_318-54178.jpg";
 			/*Envoi*/
-			Collaborateur nouveauCollaborateur = new Collaborateur(nom, prenom, dateDeNaissance, adresse, numero, emailPro, dateCreation, true);
-			collabService.sauvegarderCollaborateur(nouveauCollaborateur);
+			Collaborateur nouveauCollaborateur = new Collaborateur(nom, prenom, dateDeNaissance, adresse, numero, emailPro, dateCreation, true, photo);
+			Constantes.COLLAB_SERVICE.sauvegarderCollaborateur(nouveauCollaborateur);
 			resp.sendRedirect("/sgp/collaborateurs/lister");
 		}
 }
