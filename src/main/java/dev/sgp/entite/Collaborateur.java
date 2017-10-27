@@ -15,6 +15,8 @@ public class Collaborateur {
 	ZonedDateTime dateHeureCreation;
 	Boolean actif;
 	int compteur;
+	String intitulePoste;
+	Departement departement;
 	
 	public Collaborateur(String nom, String prenom, LocalDate dateDeNaissance, String adresse,
 			String numeroSecuriteSociale, String emailPro, ZonedDateTime dateHeureCreation,
