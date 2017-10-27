@@ -2,6 +2,8 @@
 <%@page import="dev.sgp.entite.Collaborateur"%>
 <%@page import="dev.sgp.util.Constantes.Constantes"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@page import="dev.sgp.entite.Departement"%>
+<%@page import="dev.sgp.service.DepartementService"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,42 +32,48 @@
 <div class="container-fluid" id="content">
     <a href="/sgp/collaborateurs/ajouter" id="ajoutCollaborateur" class="btn btn-default col-sm-offset-10 col-sm-2">Ajouter un nouveau collaborateur</a>
 	<h1>Les collaborateurs</h1>
-	<p> Rechercher un nom ou un prénom qui commence par :
-	    <input type="text" id="nom"/> 
-	    <input type="submit" id="chercher"/>
-	    <input type="checkbox"/> Voir les collaborateurs désactivés
-	</p>
-	<p class="form-control-static" id="filtre">
-	    Filtrer par département :
-	    <select name="departement">
-	        <option value="tous" default>Tous</option>
-	        <option value="comptabilite">Comptabilité</option>
-	        <option value="ressources">Ressources humaines</option>
-	        <option value="informatique">Informatique</option>
-	    </select>
-	</p>
+	
+	<form id="departement" method="post" action="lister">
+		<label for="nom"> Rechercher un nom ou un prénom qui commence par :</label>
+	    <input type="text" name="nom"/> 
+	    <input type="checkbox" name="activer"/> Voir les collaborateurs désactivés
+	    <br/>
+	    <label for="departement">Filtrer par département :</label>
+		    <select class="form-control" name="departement">
+		    <option value="tous" selected="selected">Tous</option>
+					<%
+						final DepartementService departService = Constantes.DEPART_SERVICE;
+						List<Departement> departements = departService.listerDepartements();
+						for (Departement departement : departements) {
+					%>
+					<option value="<%=departement.getNom()%>"><%=departement.getNom()%></option>
+					<%
+						}
+					%>
+			</select>
+		    <input type="submit" id="chercher"/>
+	  </form>
 	
 	<div id="tab-collaborateurs" class="row justify-content-between">
 	<%
 		int i = 0;
-		List<Collaborateur> collaborateurs = Constantes.COLLAB_SERVICE.listerCollaborateurs();
+		List<Collaborateur> collaborateurs = (List<Collaborateur>)request.getAttribute("collaborateurs");
 		for (Collaborateur collab : collaborateurs) {
-
 		%>
 		<div class="row pannel panel-default col-sm-offset-1 col-sm-3" id="row_collab">
 		
 			<div class="panel-heading" id="collab">
-			<%= collab.getNom() %>
+			<%= collab.getNom() %> <%= collab.getPrenom() %>
 			</div>
 			<div class="panel-body" id="collab">
 				<div class="col-sm-4">
 					<img src="<%= collab.getPhoto() %>" class="img-responsive" />
 				</div>
 				<div class="col-sm-8">
-					<h3>Fonction</h3> <%= collab.getIntitulePoste() %>
-					<h3>Departement</h3> <%if(collab.getDepartement() != null){%><%= collab.getDepartement().getNom() %><%} %>
-					<h3>Email : </h3> <%= collab.getEmailPro() %>
-					<h3>Téléphone</h3>
+					<h3>Fonction</h3> <%if(collab.getIntitulePoste() != null){%><%= collab.getIntitulePoste() %><%} %>
+					<h3>Departement</h3> <%if(collab.getDepartement() != null){%><%= collab.getDepartement().getNom() %><%;} %>
+					<h3>Email : </h3> <%if(collab.getEmailPro() != null){%><%= collab.getEmailPro() %><%} %>
+					<h3>Téléphone</h3> <%if(collab.getTelephone() != null){%><%= collab.getTelephone() %><%} %>
 					<a  href="/sgp/collaborateurs/editer?matricule=<%= collab.getMatricule() %>"id="modif" class="btn btn-default col-sm-offset-8 col-sm-4">Editer</a>
 				</div>
 			</div>

@@ -25,23 +25,32 @@ public class EditerCollaborateurController extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		String matricule = req.getParameter("matricule");
+		
 		String titre = req.getParameter("titre");
 		String adresse = req.getParameter("adresse");
 		Optional<Departement> oDep = Constantes.DEPART_SERVICE.listerDepartements().stream().filter(p -> p.getNom().equals(req.getParameter("departement"))).findFirst();
 		String nomPoste = req.getParameter("nomPoste");
 		String iban = req.getParameter("iban");
 		String bic = req.getParameter("bic");
-		
+		String telephone = req.getParameter("telephone");
+			
 		String error = ErrorBuilder.buildError("adresse:"+ adresse);
+		
 		if(!error.equals("")){
 			resp.sendError(400, "Il manque ce paramètre : " + error);
+				
 			return;
 		}
-			
+				
 		Collaborateur nouveauCollaborateur = collaborateurs.stream()
 			.filter(p->p.getMatricule().equals(matricule))
 			.collect(Collectors.toList()).get(0);
+			
+		if(req.getParameter("delete") != null){
+			nouveauCollaborateur.setActif(false);
+		}
 		if(oDep.isPresent()){
 			nouveauCollaborateur.setDepartement(oDep.get());
 		}
@@ -49,6 +58,7 @@ public class EditerCollaborateurController extends HttpServlet{
 		nouveauCollaborateur.setIntitulePoste(nomPoste);
 		nouveauCollaborateur.setIban(iban);
 		nouveauCollaborateur.setBic(bic);
+		nouveauCollaborateur.setTelephone(telephone);
 		resp.sendRedirect("/sgp/collaborateurs/lister");
 	}
 }

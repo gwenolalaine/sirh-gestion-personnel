@@ -38,7 +38,7 @@
 			Collaborateur collaborateur = (Collaborateur) request.getAttribute("collaborateur");
 		%>
 		<div id="photo" class="col-sm-4">
-			<%=collaborateur.getPhoto()%>
+			<img src="<%=collaborateur.getPhoto()%>" class="img-responsive"/>
 
 		</div>
 		<div id="form" class="col-sm-8">
@@ -47,11 +47,11 @@
 				-
 				<%=collaborateur.getMatricule()%></h1>
 			
-			<div class="col-sm-4">
-				<input type="checkbox" /> Désactiver
-			</div>
-
 			<form class="form-horizontal" action="<%=request.getContextPath() %>/collaborateurs/edit" method="post">
+				<div class="col-sm-4">
+					<input type="checkbox" name="delete" /> Désactiver
+				</div>
+			
 				<input type="hidden" name="matricule" value="<%=collaborateur.getMatricule()%>">
 				<input type="button" value="Identité" data-toggle="collapse" data-target="#identite" class="btn btn-block">
 
@@ -95,7 +95,7 @@
 					<div class="form-group">
 						<label for="telephone" class="col-sm-4">Téléphone :</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control" name="telephone">
+							<input type="text" class="form-control" name="telephone" value="<%=collaborateur.getTelephone()%>">
 						</div>
 					</div>
 				</div>

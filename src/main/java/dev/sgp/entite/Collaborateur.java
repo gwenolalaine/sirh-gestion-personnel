@@ -3,6 +3,8 @@ package dev.sgp.entite;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
+import dev.sgp.util.Constantes.Constantes;
+
 public class Collaborateur {
 	String matricule;
 	String nom;
@@ -20,6 +22,7 @@ public class Collaborateur {
 	String banque;
 	String bic;
 	String iban;
+	String telephone;
 	
 	public Collaborateur(String nom, String prenom, LocalDate dateDeNaissance, String adresse,
 			String numeroSecuriteSociale, String emailPro, ZonedDateTime dateHeureCreation,
@@ -37,6 +40,7 @@ public class Collaborateur {
 		compteur++;
 		this.matricule = "A" + compteur;
 		this.photo = photo;
+		this.departement = new Departement("Indefini");
 	}
 	/**
 	 * @return the matricule
@@ -230,8 +234,16 @@ public class Collaborateur {
 	public void setIban(String iban) {
 		this.iban = iban;
 	}
-	
-	
-	
-	
+	/**
+	 * @return the telephone
+	 */
+	public String getTelephone() {
+		return telephone;
+	}
+	/**
+	 * @param telephone the telephone to set
+	 */
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 }

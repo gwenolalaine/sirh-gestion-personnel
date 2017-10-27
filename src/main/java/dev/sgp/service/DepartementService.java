@@ -14,6 +14,7 @@ public class DepartementService {
 		listeDepartements.add(new Departement("Ressource Humaines"));
 		listeDepartements.add(new Departement("Informatique"));
 		listeDepartements.add(new Departement("Administratif"));
+		listeDepartements.add(new Departement("Indefini"));
 	}
 	
 	public List<Departement> listerDepartements() {
