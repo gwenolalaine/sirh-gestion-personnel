@@ -17,6 +17,7 @@ public class CollaborateurService {
 		listeCollaborateurs.add(collab);
 		Collaborateur collab1 = new Collaborateur("Roslin", "Laura", LocalDate.now(), "15 rue galactica", "123456789123456", "roslin.laura@societe.com", ZonedDateTime.now(), true, "https://image.freepik.com/icones-gratuites/symbole-d-39-utilisateur-inconnu_318-54178.jpg");
 		listeCollaborateurs.add(collab1);
+		
 
 	}	
 	

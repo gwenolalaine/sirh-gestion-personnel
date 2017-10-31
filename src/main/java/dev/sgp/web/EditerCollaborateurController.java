@@ -24,6 +24,28 @@ public class EditerCollaborateurController extends HttpServlet{
 	List<Departement> departements = departService.listerDepartements();
 	
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String matricule = req.getParameter("matricule");
+		
+		if(matricule == null){
+			resp.sendError(400, "Le matricule doit être renseigné");
+			return;
+		}
+		
+		
+		for(Collaborateur collab : collaborateurs){
+			if(collab.getMatricule().equals(matricule)){
+				req.setAttribute("collaborateur", collab);
+				
+				req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp")
+				.forward(req, resp);
+			}
+		}
+		
+		resp.sendError(400, "Le matricule doit être celui d'un de nos collaborateurs");
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String matricule = req.getParameter("matricule");
@@ -50,7 +72,10 @@ public class EditerCollaborateurController extends HttpServlet{
 			
 		if(req.getParameter("delete") != null){
 			nouveauCollaborateur.setActif(false);
+		}else{
+			nouveauCollaborateur.setActif(true);
 		}
+		
 		if(oDep.isPresent()){
 			nouveauCollaborateur.setDepartement(oDep.get());
 		}
@@ -59,6 +84,12 @@ public class EditerCollaborateurController extends HttpServlet{
 		nouveauCollaborateur.setIban(iban);
 		nouveauCollaborateur.setBic(bic);
 		nouveauCollaborateur.setTelephone(telephone);
-		resp.sendRedirect("/sgp/collaborateurs/lister");
+		
+		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+		collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
+		req.setAttribute("collaborateurs", collaborateurs);
+		
+		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
+		.forward(req, resp);
 	}
 }

@@ -10,7 +10,7 @@ public class DepartementService {
 	List<Departement> listeDepartements = new ArrayList<>();
 	
 	public DepartementService(){
-		listeDepartements.add(new Departement("Comptabilité"));
+		listeDepartements.add(new Departement("Comptabilite"));
 		listeDepartements.add(new Departement("Ressource Humaines"));
 		listeDepartements.add(new Departement("Informatique"));
 		listeDepartements.add(new Departement("Administratif"));

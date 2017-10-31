@@ -33,9 +33,8 @@ public class ListerCollaborateursController extends HttpServlet{
 		String departement = req.getParameter("departement");
 		
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-		collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
 		
-		if(req.getParameter("activer") != null){
+		if(req.getParameter("activer") == null){
 			collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
 		}
 		
@@ -44,7 +43,7 @@ public class ListerCollaborateursController extends HttpServlet{
 		}
 		
 		if(req.getParameter("nom") != null){
-			collaborateurs = collaborateurs.stream().filter(p->p.getNom().startsWith(req.getParameter("nom"))).collect(Collectors.toList());
+			collaborateurs = collaborateurs.stream().filter(p->p.getNom().toLowerCase().startsWith(req.getParameter("nom").toLowerCase()) || p.getPrenom().toLowerCase().startsWith(req.getParameter("nom").toLowerCase())).collect(Collectors.toList());
 		}
 		
 		req.setAttribute("collaborateurs", collaborateurs);

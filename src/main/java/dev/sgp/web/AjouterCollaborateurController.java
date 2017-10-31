@@ -6,7 +6,9 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -56,7 +58,14 @@ public class AjouterCollaborateurController extends HttpServlet{
 			String photo = "https://image.freepik.com/icones-gratuites/symbole-d-39-utilisateur-inconnu_318-54178.jpg";
 			/*Envoi*/
 			Collaborateur nouveauCollaborateur = new Collaborateur(nom, prenom, dateDeNaissance, adresse, numero, emailPro, dateCreation, true, photo);
+			
 			Constantes.COLLAB_SERVICE.sauvegarderCollaborateur(nouveauCollaborateur);
-			resp.sendRedirect("/sgp/collaborateurs/lister");
+			
+			List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+			collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
+			req.setAttribute("collaborateurs", collaborateurs);
+			
+			req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
+			.forward(req, resp);
 		}
 }

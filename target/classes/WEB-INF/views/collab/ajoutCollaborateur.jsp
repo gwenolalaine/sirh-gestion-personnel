@@ -4,38 +4,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/css/bootstrap.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/css/bootstrap.css">
 	<style>
-		.error {
-			color: red;
-		}
+	.error {
+		color: red;
+	}
 	</style>
-
-<script>
-		function showModal(){
-			$('#modal').modal('show');
-			$('#modalValues').html('<br/>' + $('#nom').val() + '<br/>' + $('#prenom').val() + '<br/>' + $('#date').val() + '<br/>' + $('#adresse').val() + '<br/>' + $('#numero').val() + '<br/>');
-		}
-		
-		function submit(){
-			document.forms[0].action = "<%=request.getContextPath()%>/collaborateurs/ajouter";
-			document.forms[0].method = "post";
-			document.forms[0].submit();
-		}
-	</script>
 </head>
 <body class="ng-scope">
 	<nav class="navbar navbar-default">
 		<ul class="nav navbar-nav">
 			<li><a href="#!">X</a></li>
-			<li><a
-				href="<%=request.getContextPath()%>/collaborateurs/lister"
-				id="collaborateurs">Collaborateurs</a></li>
+			<li><a href="<%=request.getContextPath()%>/collaborateurs/lister" id="collaborateurs">Collaborateurs</a></li>
 			<li><a href="#!statistiques" id="statistiques">Statistiques</a></li>
 			<li><a href="#!activites" id="activites">Activites</a></li>
 		</ul>
@@ -71,10 +56,10 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="numero" class="col-sm-4">Numero de
-					sécurité sociale:</label>
+				<label for="numero" class="col-sm-4">Numero de sécurité
+					sociale:</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" name="numero" id="numero"> 
+					<input type="text" class="form-control" name="numero" id="numero">
 				</div>
 			</div>
 			<div class="col-sm-offset-4 col-sm-8">
@@ -93,22 +78,39 @@
 					<div class="modal-body">
 						Vous êtes sur le point de créer un nouveau collaborateur : <br />
 						<div class="col-sm-6">
-							<br />Nom <br /> Prenom <br /> Date de naissance <br /> Adresse <br />
-							Numero de sécurité sociale <br /> <br />
+							<br />Nom 
+							<br /> Prenom 
+							<br /> Date de naissance 
+							<br />Adresse 
+							<br /> Numero de sécurité sociale
+							<br /> <br />
 						</div>
 						<div class="col-sm-offset-2 col-sm-4" id="modalValues"></div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-						<button type="button" class="btn btn-default" id="confirm"
-							onclick="submit()">Confirmer</button>
+						<button type="button" class="btn btn-default" id="confirm" onclick="submit()">Confirmer</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
 	</div>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+	function showModal(){
+		$('#modal').modal('show');
+		$('#modalValues').html('<br/>' + $('#nom').val() + '<br/>' + $('#prenom').val() + '<br/>' + $('#date').val() + '<br/>' + $('#adresse').val() + '<br/>' + $('#numero').val() + '<br/>');
+	}
+		
+	function submit(){
+		document.forms[0].action = "<%=request.getContextPath()%>/collaborateurs/ajouter";
+		document.forms[0].method = "post";
+		document.forms[0].submit();
+	}
+</script>
+
+</body>
 </html>
