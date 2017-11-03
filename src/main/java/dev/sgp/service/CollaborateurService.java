@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.sgp.entite.Collaborateur;
-import dev.sgp.entite.Departement;
 
 public class CollaborateurService {
 	
