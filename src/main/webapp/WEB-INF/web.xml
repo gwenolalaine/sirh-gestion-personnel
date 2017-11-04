@@ -21,14 +21,31 @@
 		<url-pattern>/collaborateurs/ajouter</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>EditerCollaborateurController</servlet-name>
 		<servlet-class>dev.sgp.web.EditerCollaborateurController</servlet-class>
-		
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EditerCollaborateurController</servlet-name>
 		<url-pattern>/collaborateurs/editer</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>StatsController</servlet-name>
+		<servlet-class>dev.sgp.web.StatsController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StatsController</servlet-name>
+		<url-pattern>/statistiques</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>FrequentationFilter</filter-name>
+		<filter-class>dev.sgp.filtre.FrequentationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>FrequentationFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 </web-app>

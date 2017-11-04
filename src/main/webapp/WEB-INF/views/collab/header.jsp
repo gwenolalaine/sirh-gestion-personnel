@@ -23,7 +23,7 @@
 	   		</div>
 			<ul class="nav navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/collaborateurs/lister" id="collaborateurs">Collaborateurs</a></li>
-				<li><a href="#!statistiques" id="statistiques">Statistiques</a></li>
+				<li><a href="<%=request.getContextPath()%>/statistiques" id="statistiques">Statistiques</a></li>
 				<li><a href="#!activites" id="activites">Activites</a></li>
 			</ul>
 		</div>
