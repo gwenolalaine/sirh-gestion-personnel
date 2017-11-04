@@ -35,7 +35,7 @@ public class EditerCollaborateurController extends HttpServlet{
 		for(Collaborateur collab : collaborateurs){
 			if(collab.getMatricule().equals(matricule)){
 				req.setAttribute("collaborateur", collab);
-				
+				req.setAttribute("departements", departService.listerDepartements());
 				req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp")
 				.forward(req, resp);
 			}
@@ -87,7 +87,7 @@ public class EditerCollaborateurController extends HttpServlet{
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
 		req.setAttribute("collaborateurs", collaborateurs);
-		
+		req.setAttribute("departements", departService.listerDepartements());
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 		.forward(req, resp);
 	}

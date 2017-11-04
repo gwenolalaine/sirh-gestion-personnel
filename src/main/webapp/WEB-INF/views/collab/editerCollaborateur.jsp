@@ -7,29 +7,29 @@
 
 <%@ include file="header.jsp" %>
 
-<%
-	Collaborateur collaborateur = (Collaborateur) request.getAttribute("collaborateur");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="collaborateur" value="${requestScope.collaborateur}"></c:set>
 		
 <div id="photo" class="col-sm-4">
-	<img src="<%=collaborateur.getPhoto()%>" class="img-responsive" />
+	<img src="${collaborateur.photo}" class="img-responsive" />
 </div>
 		
 <div id="form" class="col-sm-8" id="collaborateur">
 	<h1 class="col-sm-8">
-		<%=collaborateur.getNom()%>
-		<%=collaborateur.getPrenom()%>
+		${collaborateur.nom}
+		${collaborateur.prenom}
 		-
-		<%=collaborateur.getMatricule()%>
+		${collaborateur.matricule}
 	</h1>
 
 	<form class="form-horizontal" action="<%=request.getContextPath()%>/collaborateurs/editer" method="post">
 		<div class="col-sm-4">
 			<input type="checkbox" name="delete"
-			<%if (!collaborateur.getActif()){%> checked <% }%>/> Désactiver	
+			<c:if test="${!collaborateur.actif}">checked</c:if>/> Désactiver	
 		</div>
 
-		<input type="hidden" name="matricule" value="<%=collaborateur.getMatricule()%>"> 
+		<input type="hidden" name="matricule" value="${collaborateur.matricule }"> 
 		<input type="button" value="Identité" data-toggle="collapse" data-target="#identite" class="btn btn-block">
 
 		<div id="identite" class="collapse">
@@ -49,35 +49,35 @@
 		</div>
 		
 		<div class="form-group">
-			<label class="col-sm-4" for="nom"><%=collaborateur.getNom()%></label>
+			<label class="col-sm-4" for="nom">${collaborateur.nom}</label>
 		</div>
 		
 		<div class="form-group">
-			<label for="prenom" class="col-sm-4"><%=collaborateur.getPrenom()%></label>
+			<label for="prenom" class="col-sm-4 ">${collaborateur.prenom}</label>
 		</div>
 		
 		<div class="form-group">
-			<label for="date" class="col-sm-4"><%=collaborateur.getDateDeNaissance()%></label>
+			<label for="date" class="col-sm-4">${collaborateur.dateDeNaissance}</label>
 		</div>
 		
 		<div class="form-group">
 			<label for="Adresse" class="col-sm-4">Adresse :</label>
 			<div class="col-sm-8">
-				<input type="text" class="form-control" name="adresse" value="<%=collaborateur.getAdresse()%>" required>
+				<input type="text" class="form-control" name="adresse" value="${collaborateur.adresse}" required>
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="numero" class="col-sm-4">Numero de sécurité sociale :</label>
 			<div class="col-sm-8">
-				<input type="text" class="form-control" id="numero" value="<%=collaborateur.getNumeroSecuriteSociale()%>">
+				<input type="text" class="form-control" id="numero" value="${collaborateur.numeroSecuriteSociale}">
 			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for="telephone" class="col-sm-4">Téléphone :</label>
 			<div class="col-sm-8">
-				<input type="text" class="form-control" name="telephone" value="<%=collaborateur.getTelephone()%>">
+				<input type="text" class="form-control" name="telephone" value="${collaborateur.telephone}">
 			</div>
 		</div>
 	</div>
@@ -90,13 +90,10 @@
 			<label class="col-sm-4" for="departement">Département :</label>
 			<div class="col-sm-8">
 				<select class="form-control" name="departement">
-					<%	final DepartementService departService = Constantes.DEPART_SERVICE;
-						List<Departement> departements = departService.listerDepartements();
-						for (Departement departement : departements) {
-					%>
-					
-					<option <%if (collaborateur.getDepartement().equals(departement)) %>selected value="<%=departement.getNom()%>"><%=departement.getNom()%></option>
-					<% }%>
+					<c:forEach items="${requestScope.departements}" var="dep" >
+						<option value="${dep.nom}"
+							<c:if test="${collaborateur.departement == dep}">selected</c:if>>${dep.nom}</option>
+					</c:forEach>
 				</select>
 			</div>
 		</div>
@@ -104,7 +101,7 @@
 		<div class="form-group">
 			<label for="nomPoste" class="col-sm-4">Nom du poste</label>
 			<div class="col-sm-8">
-				<input type="text" class="form-control" name="nomPoste" value="<%=collaborateur.getIntitulePoste()%>">
+				<input type="text" class="form-control" name="nomPoste" value="${collaborateur.intitulePoste}">
 			</div>
 		</div>
 	</div>
@@ -116,14 +113,14 @@
 		<div class="form-group">
 			<label class="col-sm-4" for="iban">IBAN :</label>
 			<div class="col-sm-8">
-				<input type="text" class="form-control" name="iban" value="<%=collaborateur.getIban()%>">
+				<input type="text" class="form-control" name="iban" value="${collaborateur.iban}">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<label for="bic" class="col-sm-4">BIC</label>
 			<div class="col-sm-8">
-				<input type="text" class="form-control" name="bic" value="<%=collaborateur.getBic()%>">
+				<input type="text" class="form-control" name="bic" value="${collaborateur.bic}">
 			</div>
 		</div>
 	</div>

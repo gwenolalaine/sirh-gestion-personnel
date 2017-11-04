@@ -10,7 +10,7 @@
 <%@ include file="header.jsp" %>
 
 <div class="col-md-11 col-md-offset-1">
-	<a href="/sgp/collaborateurs/ajouter" id="ajoutCollaborateur" class="btn btn-default col-md-offset-10 col-md-2">Ajouter un nouveau collaborateur</a>
+	<a href="<c:url value="/collaborateurs/ajouter"/>" id="ajoutCollaborateur" class="btn btn-default col-md-offset-10 col-md-2">Ajouter un nouveau collaborateur</a>
 	
 	<h1>Les collaborateurs</h1>
 
@@ -19,9 +19,9 @@
 		<div class="row">
 			<div class="col-sm-8">
 				<label for="nom" class="col-form-label"> Rechercher un nom ou un prénom qui commence par :</label> 
-				<input type="text" name="nom" class="btn btn-default"/>
-				<input type="checkbox" name="activer"
-				<%if (request.getParameter("activer") != null){%> checked <% }%>/>
+				<input type="text" name="nom" class="btn btn-default" <c:if test="${!empty requestScope.nom}">value="${requestScope.nom}"</c:if>/>
+				<input type="checkbox" name="activer" id="activer"
+				<c:if test="${requestScope.activer!=null}">checked</c:if>>
 				Voir les collaborateurs désactivés <br />
 			</div>
 		</div>
@@ -30,12 +30,12 @@
 			<div class="col-sm-5">
 				<label for="departement" class="col-form-label" >Filtrer par département :</label> 
 				<select class="btn btn-default dropdown-toggle"name="departement">
-					<option value="tous" selected="selected">Tous</option>
-						<%final DepartementService departService = Constantes.DEPART_SERVICE;
-							List<Departement> departements = departService.listerDepartements();
-							for (Departement departement : departements) {%>
-								<option value="<%=departement.getNom()%>"><%=departement.getNom()%></option>
-						<% }%>
+					<option value="tous" <c:if test="${empty requestScope.departement}">selected="selected"</c:if>>Tous</option>
+
+					<c:forEach items="${requestScope.departements}" var="dep" >
+						<option value="${dep.nom}"
+							<c:if test="${requestScope.departement!= null && requestScope.departement==dep.nom}">selected</c:if>>${dep.nom}</option>
+					</c:forEach>
 				</select>
 				
 				<input type="submit" id="chercher" class="btn btn-inverse right-rounded"/>
@@ -50,51 +50,45 @@
 
 <div id="tab-collaborateurs">
 
-	<%
-		int i = 0;
-		List<Collaborateur> collaborateurs = (List<Collaborateur>) request.getAttribute("collaborateurs");
-		for (Collaborateur collab : collaborateurs) {
-	%>
-	
+<c:set var="listCollab" value="${requestScope.collaborateurs}"></c:set>
+<c:forEach var="collab" items="${listCollab}">
 	<div class="pannel panel-primary col-sm-4" id="row_collab">
 		<div class="panel-heading" id="collab">
-			<%=collab.getNom()%>
-			<%=collab.getPrenom()%>
+			${collab.nom}
+			${collab.prenom}
 		</div>
 							
 		<div class="panel-body" id="collab">
 			<div class="col-sm-4">
-				<img src="<%=collab.getPhoto()%>" class="img-responsive" />
+				<img src="${collab.photo}" class="img-responsive" />
 			</div>
 		
 			<div class="col-sm-8">
 				<h4>Fonction</h4>
-				<%if (collab.getIntitulePoste() != null){%>
-				<%=collab.getIntitulePoste()%>
-				<% }%>
+				<c:if test="${!empty collab.intitulePoste}">
+				${collab.intitulePoste}
+				</c:if>
 				
 				<h4>Departement</h4>
-				<%if (collab.getDepartement() != null || !collab.getDepartement().getNom().equals("Indefini")){%>
-				<%=collab.getDepartement().getNom()%>
-				<% }%>
+				<c:if test="${!empty collab.departement}">
+				${collab.departement.nom}
+				</c:if>
 				
 				<h4>Email :</h4>
-				<%if (collab.getEmailPro() != null){%>
-				<%=collab.getEmailPro()%>
-				<% }%>
+				<c:if test="${!empty collab.emailPro}">
+				${collab.emailPro}
+				</c:if>
 								
 				<h4>Téléphone</h4>
-				<% if (collab.getTelephone() != null){%>
-				<%=collab.getTelephone()%>
-				<% }%>
+				<c:if test="${!empty collab.telephone}">
+				${collab.telephone}
+				</c:if>
 				
-				<a href="/sgp/collaborateurs/editer?matricule=<%=collab.getMatricule()%>" id="modif" class="btn btn-primary col-sm-offset-8 col-sm-4">Editer</a>
+				<a href="/sgp/collaborateurs/editer?matricule=${collab.matricule}" id="modif" class="btn btn-primary col-sm-offset-8 col-sm-4">Editer</a>
 			</div>
 		</div>
 	</div>
-<%
-	}
-%>
+</c:forEach>
 </div>
 
 <%@ include file="footer.jsp" %>

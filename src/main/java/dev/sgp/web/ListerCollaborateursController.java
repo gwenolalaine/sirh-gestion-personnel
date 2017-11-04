@@ -10,16 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
 import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes.Constantes;
 
 public class ListerCollaborateursController extends HttpServlet{
 	
 	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private DepartementService departService = Constantes.DEPART_SERVICE;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-
+		
+		req.setAttribute("departements", departService.listerDepartements());
 		req.setAttribute("collaborateurs", collaborateurs);
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 		.forward(req, resp);
@@ -43,6 +47,10 @@ public class ListerCollaborateursController extends HttpServlet{
 			collaborateurs = collaborateurs.stream().filter(p->p.getNom().toLowerCase().startsWith(req.getParameter("nom").toLowerCase()) || p.getPrenom().toLowerCase().startsWith(req.getParameter("nom").toLowerCase())).collect(Collectors.toList());
 		}
 		
+ 		req.setAttribute("departements", departService.listerDepartements());
+		req.setAttribute("departement", req.getParameter("departement"));
+		req.setAttribute("nom", req.getParameter("nom"));
+		req.setAttribute("activer", req.getParameter("activer"));
 		req.setAttribute("collaborateurs", collaborateurs);
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 		.forward(req, resp);
