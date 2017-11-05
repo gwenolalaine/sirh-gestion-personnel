@@ -17,10 +17,10 @@ import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes.Constantes;
 
 public class EditerCollaborateurController extends HttpServlet{
-	CollaborateurService collabService = Constantes.COLLAB_SERVICE;
-	List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-	DepartementService departService = Constantes.DEPART_SERVICE;
-	List<Departement> departements = departService.listerDepartements();
+	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+	private DepartementService departService = Constantes.DEPART_SERVICE;
+	private List<Departement> departements = departService.listerDepartements();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,17 +31,18 @@ public class EditerCollaborateurController extends HttpServlet{
 			return;
 		}
 		
-		
-		for(Collaborateur collab : collaborateurs){
-			if(collab.getMatricule().equals(matricule)){
-				req.setAttribute("collaborateur", collab);
-				req.setAttribute("departements", departService.listerDepartements());
-				req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp")
-				.forward(req, resp);
-			}
+		Optional<Collaborateur> collab = collaborateurs.stream().filter(c->c.getMatricule().equals(matricule)).findFirst();
+
+		if(collab.isPresent()) {
+			req.setAttribute("collaborateur", collab.get());
+			req.setAttribute("departements", departService.listerDepartements());
+			req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp")
+			.forward(req, resp);
+		}else {
+			resp.sendError(400, "Le matricule doit être celui d'un de nos collaborateurs");
 		}
 		
-		resp.sendError(400, "Le matricule doit être celui d'un de nos collaborateurs");
+		
 	}
 	
 	@Override
@@ -84,10 +85,9 @@ public class EditerCollaborateurController extends HttpServlet{
 		nouveauCollaborateur.setBic(bic);
 		nouveauCollaborateur.setTelephone(telephone);
 		
-		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
 		req.setAttribute("collaborateurs", collaborateurs);
-		req.setAttribute("departements", departService.listerDepartements());
+		req.setAttribute("departements", departements);
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 		.forward(req, resp);
 	}

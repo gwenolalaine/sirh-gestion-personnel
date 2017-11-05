@@ -1,7 +1,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 
-<%@ include file="header.jsp" %>
+<%@ include file="../header.jsp" %>
 
 <h1>Nouveau collaborateur</h1>
 <br /> <br />
@@ -77,7 +77,7 @@
 	</div>
 </div>
 
-<%@ include file="footer.jsp" %>
+<%@ include file="../footer.jsp" %>
 
 <script>
 	function showModal(){

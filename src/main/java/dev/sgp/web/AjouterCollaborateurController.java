@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes.Constantes;
 
 public class AjouterCollaborateurController extends HttpServlet{
 		
 		private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+		private DepartementService departService = Constantes.DEPART_SERVICE;
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			req.getRequestDispatcher("/WEB-INF/views/collab/ajoutCollaborateur.jsp")
@@ -52,7 +54,7 @@ public class AjouterCollaborateurController extends HttpServlet{
 			
 			/* Creation du reste des paramètres */
 			ZonedDateTime dateCreation = ZonedDateTime.now();
-			String emailPro = prenom + "." + nom + "@societe.com";
+			String emailPro = prenom.toLowerCase() + "." + nom.toLowerCase() + "@societe.com";
 			String photo = "https://image.freepik.com/icones-gratuites/symbole-d-39-utilisateur-inconnu_318-54178.jpg";
 			/*Envoi*/
 			Collaborateur nouveauCollaborateur = new Collaborateur(nom, prenom, dateDeNaissance, adresse, numero, emailPro, dateCreation, true, photo);
@@ -62,7 +64,7 @@ public class AjouterCollaborateurController extends HttpServlet{
 			List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 			collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());
 			req.setAttribute("collaborateurs", collaborateurs);
-			
+			req.setAttribute("departements", departService.listerDepartements());
 			req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 			.forward(req, resp);
 		}

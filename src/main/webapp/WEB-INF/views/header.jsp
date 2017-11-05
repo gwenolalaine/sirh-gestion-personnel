@@ -7,7 +7,6 @@
 	<title>Document</title>
 
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/css/bootstrap.css">
-	<link rel="stylesheet" href="style.css">
 	<style>
 	.error {
 		color: red;

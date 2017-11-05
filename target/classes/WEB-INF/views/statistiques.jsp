@@ -5,7 +5,7 @@
 <%@page import="dev.sgp.util.Constantes.Constantes"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 
-<%@ include file="collab/header.jsp" %>
+<%@ include file="header.jsp" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -26,7 +26,12 @@
 	        <tr>
 	          	<td>${visite.chemin}</td>
 	          	<td>${visite.nbVisites}</td>
+	          	<td>${requestScope.min}</td>
+	          	<td>${requestScope.max}</td>
+	          	<td>${requestScope.moy}</td>
 	        </tr>
         </c:forEach>
     </tbody>
 </table>
+
+<%@ include file="footer.jsp" %>

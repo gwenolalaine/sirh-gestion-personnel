@@ -31,6 +31,10 @@ public class FrequentationFilter implements Filter{
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
 		
+		Integer before = (int)System.currentTimeMillis();
+		chain.doFilter(req, resp);
+		Integer after = (int) System.currentTimeMillis();
+		
 		HttpServletRequest request = (HttpServletRequest) req;
 		String url 	= request.getRequestURI();
 		
@@ -38,13 +42,14 @@ public class FrequentationFilter implements Filter{
 		
 		if(visiteOpt.isPresent()) {
 			visiteOpt.get().setNbVisites(visiteOpt.get().getNbVisites()+1);
+			visiteOpt.get().setTempsExecution(after-before);
 		}else {
 			VisiteWeb visite = new VisiteWeb();
 			visite.setChemin(url);
 			visite.setNbVisites(1);
+			visite.setTempsExecution(after-before);
+			visites.add(visite);
 		}
-		
-		chain.doFilter(req, resp);
 	}
 
 	@Override
