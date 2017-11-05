@@ -1,9 +1,23 @@
 package dev.sgp.entite;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="visiteWeb")
 public class VisiteWeb {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
+	@Column
 	String chemin;
+	@Column
 	Integer tempsExecution;
+	@Column
 	int nbVisites;
 	
 	public int getId() {

@@ -10,16 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.entite.Departement;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
-import dev.sgp.util.Constantes.Constantes;
 
 public class EditerCollaborateurController extends HttpServlet{
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	@Autowired private CollaborateurService collabService;
+	@Autowired private DepartementService departService;
+	
 	private List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-	private DepartementService departService = Constantes.DEPART_SERVICE;
 	private List<Departement> departements = departService.listerDepartements();
 	
 	@Override
@@ -52,7 +54,7 @@ public class EditerCollaborateurController extends HttpServlet{
 		
 		String titre = req.getParameter("titre");
 		String adresse = req.getParameter("adresse");
-		Optional<Departement> oDep = Constantes.DEPART_SERVICE.listerDepartements().stream().filter(p -> p.getNom().equals(req.getParameter("departement"))).findFirst();
+		Optional<Departement> oDep = departService.listerDepartements().stream().filter(p -> p.getNom().equals(req.getParameter("departement"))).findFirst();
 		String nomPoste = req.getParameter("nomPoste");
 		String iban = req.getParameter("iban");
 		String bic = req.getParameter("bic");

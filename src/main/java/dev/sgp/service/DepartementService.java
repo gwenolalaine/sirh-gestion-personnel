@@ -1,26 +1,30 @@
 package dev.sgp.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import dev.sgp.entite.Departement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import dev.sgp.entite.Departement;
+import dev.sgp.repository.DepartementRepository;
+
+@Service
 public class DepartementService {
-	List<Departement> listeDepartements = new ArrayList<>();
+	@Autowired private DepartementRepository departementRepository;
 	
 	public DepartementService(){
-		listeDepartements.add(new Departement("Comptabilite"));
-		listeDepartements.add(new Departement("Ressource Humaines"));
-		listeDepartements.add(new Departement("Informatique"));
-		listeDepartements.add(new Departement("Administratif"));
-		listeDepartements.add(new Departement("Indefini"));
+		departementRepository.save(new Departement("Comptabilite"));
+		departementRepository.save(new Departement("Ressource Humaines"));
+		departementRepository.save(new Departement("Informatique"));
+		departementRepository.save(new Departement("Administratif"));
+		departementRepository.save(new Departement("Indefini"));
 	}
 	
 	public List<Departement> listerDepartements() {
-		return listeDepartements;
+		return departementRepository.findAll();
 	}
 	
 	public void sauvegarderDepartement(Departement depart) {
-		listeDepartements.add(depart);
+		departementRepository.save(depart);
 	}
 }

@@ -1,14 +1,25 @@
 package dev.sgp.entite;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="departement")
 public class Departement {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
+	@Column
 	String nom;
-	int compteur = 0;
+	@Column
 	String value;
 	
 	public Departement(String nom) {
 		super();
-		this.id = compteur++;
 		this.nom = nom;
 		this.value = this.nom.toLowerCase().trim();
 	}

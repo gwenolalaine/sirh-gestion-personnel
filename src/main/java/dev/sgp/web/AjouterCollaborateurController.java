@@ -13,15 +13,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
-import dev.sgp.util.Constantes.Constantes;
 
 public class AjouterCollaborateurController extends HttpServlet{
 		
-		private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
-		private DepartementService departService = Constantes.DEPART_SERVICE;
+		@Autowired private CollaborateurService collabService;
+		@Autowired private DepartementService departService;
+		
 		@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			req.getRequestDispatcher("/WEB-INF/views/collab/ajoutCollaborateur.jsp")
@@ -31,7 +33,6 @@ public class AjouterCollaborateurController extends HttpServlet{
 		public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			String resultat;
 			Map<String, String> erreurs = new HashMap<String, String>();
-			CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 			
 			/* Récuperation du formulaire */
 			String nom = req.getParameter("nom");
@@ -59,7 +60,7 @@ public class AjouterCollaborateurController extends HttpServlet{
 			/*Envoi*/
 			Collaborateur nouveauCollaborateur = new Collaborateur(nom, prenom, dateDeNaissance, adresse, numero, emailPro, dateCreation, true, photo);
 			
-			Constantes.COLLAB_SERVICE.sauvegarderCollaborateur(nouveauCollaborateur);
+			collabService.sauvegarderCollaborateur(nouveauCollaborateur);
 			
 			List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 			collaborateurs = collaborateurs.stream().filter(p->p.getActif()).collect(Collectors.toList());

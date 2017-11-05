@@ -3,23 +3,52 @@ package dev.sgp.entite;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="collaborateur")
 public class Collaborateur {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	int id;
+	@Column
 	String matricule;
+	@Column
 	String nom;
+	@Column
 	String prenom;
+	@Column
 	LocalDate dateDeNaissance;
+	@Column
 	String adresse;
+	@Column
 	String numeroSecuriteSociale;
+	@Column
 	String emailPro;
+	@Column
 	String photo;
+	@Column
 	ZonedDateTime dateHeureCreation;
+	@Column
 	Boolean actif;
+	
 	static int compteur = 0;
+	@Column
 	String intitulePoste;
+	@Column
 	Departement departement;
+	@Column
 	String banque;
+	@Column
 	String bic;
+	@Column
 	String iban;
+	@Column
 	String telephone;
 	
 	public Collaborateur(String nom, String prenom, LocalDate dateDeNaissance, String adresse,
